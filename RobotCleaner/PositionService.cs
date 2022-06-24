@@ -2,16 +2,18 @@
 {
     public class PositionService
     {
-        public Point GetPosition(Point point, string compassDirection)
+        private static Exception GetArgumentOutOfRangeException()
         {
-            return compassDirection switch
-            {
-                "N" => new Point(point.X + 1, point.Y),
-                "S" => new Point(point.X - 1, point.Y),
-                "E" => new Point(point.X, point.Y + 1),
-                "W" => new Point(point.X, point.Y - 1),
-                _ => throw new ArgumentOutOfRangeException($"Direction: {compassDirection} invalid"),
-            };
+            return new ArgumentOutOfRangeException($"Unkown direction");
         }
+
+        public Point GetPosition(Point point, Direction direction) => direction switch
+        {
+            Direction.North => new Point(point.X + 1, point.Y),
+            Direction.South => new Point(point.X - 1, point.Y),
+            Direction.East => new Point(point.X, point.Y + 1),
+            Direction.West => new Point(point.X, point.Y - 1),
+            _ => throw GetArgumentOutOfRangeException()
+        };
     }
 }

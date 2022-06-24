@@ -17,9 +17,7 @@ namespace RobotCleanerTests
         [InlineData(9877, 743421, 9878, 743421)]
         public void PositionService_Direction_North_Should_Give_Expected_Values(int x, int y, int newX, int newY)
         {
-            var direction = "N";
-
-            TestSut(x, y, newX, newY, direction);
+            TestSut(x, y, newX, newY, Direction.North);
         }
 
         [Theory]
@@ -29,9 +27,7 @@ namespace RobotCleanerTests
         [InlineData(1, 743421, 0, 743421)]
         public void PositionService_Direction_South_Should_Give_Expected_Values(int x, int y, int newX, int newY)
         {
-            var direction = "S";
-
-            TestSut(x, y, newX, newY, direction);
+            TestSut(x, y, newX, newY, Direction.South);
         }
 
         [Theory]
@@ -41,9 +37,7 @@ namespace RobotCleanerTests
         [InlineData(743421, 6573, 743421, 6574)]
         public void PositionService_Direction_East_Should_Give_Expected_Values(int x, int y, int newX, int newY)
         {
-            var direction = "E";
-
-            TestSut(x, y, newX, newY, direction);
+            TestSut(x, y, newX, newY, Direction.East);
         }
 
         [Theory]
@@ -53,12 +47,10 @@ namespace RobotCleanerTests
         [InlineData(743421, 6573, 743421, 6572)]
         public void PositionService_Direction_West_Should_Give_Expected_Values(int x, int y, int newX, int newY)
         {
-            var direction = "W";
-
-            TestSut(x, y, newX, newY, direction);
+            TestSut(x, y, newX, newY, Direction.West);
         }
 
-        private void TestSut(int x, int y, int newX, int newY, string direction)
+        private void TestSut(int x, int y, int newX, int newY, Direction direction)
         {
             var expected = new Point(newX, newY);
             var actual = _positionService.GetPosition(new(x, y), direction);

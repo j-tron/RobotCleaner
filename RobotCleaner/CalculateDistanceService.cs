@@ -1,24 +1,42 @@
 ﻿namespace RobotCleaner
 {
-    public class CalculateDistanceService
+    public partial class CalculateDistanceService
     {
-        public IEnumerable<Point> CalculateDistance(Point point, string direction, int steps)
+        public IEnumerable<Point> GetPointsList(Point point, Vector vector)
         {
             PositionService positionService = new();
-            //Dictionary<Point, bool> visitedPoints = new();
-
-            for (int i = 0; i < steps; i++)
+            Point currentPoint = point;
+            for (int i = 0; i < vector.Steps; i++)
             {
-                yield return positionService.GetPosition(point, direction);
+                var res = positionService.GetPosition(currentPoint, vector.Direction);
 
-                //if (!visitedPoints.ContainsKey(position))
-                //{
-                //    yield return position;
-                //    //visitedPoints.Add(position, true);
-                //}
+                yield return res;
+
+                currentPoint = res;
+            }
+        }
+        public long CalculateDistances(Point startingPoint, IEnumerable<Vector> vectors)
+        {
+            Dictionary<Point, bool> visitedPoints = new()
+            {
+                { startingPoint, true } //starting position is considered to have been visited
+            };
+            Point currentPoint = startingPoint;
+            foreach (var vector in vectors)
+            {
+                var points = GetPointsList(currentPoint, vector);
+
+                foreach (var point in points)
+                {
+                    if (!visitedPoints.ContainsKey(point))
+                    {
+                        visitedPoints.Add(point, true);
+                    }
+                }
+                currentPoint = points.Last();
             }
 
-            //return visitedPoints;
+            return visitedPoints.Count;
         }
     }
 }
