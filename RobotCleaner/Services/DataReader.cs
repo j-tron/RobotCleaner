@@ -11,7 +11,6 @@ public class DataReader : IDataReader
 
     public DataReader()
     {
-
         nrOfCommands = int.Parse(Console.ReadLine()!);
         startingPoint = GetStartingPoint(Console.ReadLine()!);
         _vectors = GetVectors(nrOfCommands);
@@ -39,10 +38,8 @@ public class DataReader : IDataReader
     {
         for (int i = 0; i < nrOfCommands; i++)
         {
-            var command = Console.ReadLine()?.Split(' ');
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            var command = Console.ReadLine()?.Split(' ')!;
             yield return Vector.GetVector(command[0], int.Parse(command[1]));
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
     }
 }
